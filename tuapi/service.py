@@ -18,6 +18,8 @@ class Tweets:
         lista_tweets = resposta.text
         json_retorno = json.loads(lista_tweets)
         result_json = json_retorno['statuses'][0]
+
+        
         B={}
         if 'created_at' in result_json and result_json['created_at']:
             B['data_do_tweet'] = result_json['created_at']  
@@ -35,15 +37,27 @@ class Tweets:
                 D= {}   
                 
                 
-                D['nickname'] = OBJETO['screen_name']
-                D['Nome'] = OBJETO['name']
-                D['identificador'] = OBJETO ['id']
+                D['nickname_mencionado'] = OBJETO['screen_name']
+                D['nome_mencionado'] = OBJETO['name']
+                D['identificador_mencionado'] = OBJETO ['id']
                 
                 entidades.append(D)
             B['Usuários_mencionados'] = entidades
         
         if 'metadata' in result_json and result_json['metadata']:
-            B['língua_do_tweet'] = result_json['metadata']['iso_language_code']
+            B['língua_do_tweet'] = result_json['metadata']['iso_language_code'] 
+
+        if 'user' in result_json and result_json['user']:
+            B['nome_do_usuário'] = result_json['user']['name']
+            B['id_do_usuário'] = result_json['user']['id']
+            B['nickname_do_usuário'] = result_json['user']['screen_name']
+            B['localização_do_usuario'] = result_json['user']['location']
+            B['total_de_seguidores'] = result_json['user']['followers_count']
+
+        
+
+
+        
            
 
 
