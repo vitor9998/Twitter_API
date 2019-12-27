@@ -18,13 +18,12 @@ class Tweets:
         lista_tweets = resposta.text
         json_retorno = json.loads(lista_tweets)
         result_json = json_retorno['statuses'][0]
-
         B={}
         if 'created_at' in result_json and result_json['created_at']:
             B['data_do_tweet'] = result_json['created_at']  
         
         if 'text' in result_json and result_json['text']:   
-            B['texto'] = result_json['text']   
+            B['texto'] = result_json['text']     
     
         
         
@@ -33,7 +32,7 @@ class Tweets:
         if 'entities' in result_json and result_json['entities']:
             entidades=[]
             for OBJETO in result_json['entities']['user_mentions']:
-                D= {}
+                D= {}   
                 
                 
                 D['nickname'] = OBJETO['screen_name']
@@ -41,7 +40,12 @@ class Tweets:
                 D['identificador'] = OBJETO ['id']
                 
                 entidades.append(D)
-            B['Entidades'] = entidades
+            B['Usuários_mencionados'] = entidades
+        
+        if 'metadata' in result_json and result_json['metadata']:
+            B['língua_do_tweet'] = result_json['metadata']['iso_language_code']
+           
+
 
 
         return B
